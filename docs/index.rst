@@ -3,18 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Requests: HTTP for Humans
-=========================
+Requests: HTTP dla ludzi
+========================
 
-Release v\ |version|. (:ref:`Installation <install>`)
+Wydanie v\ |version|. (:ref:`Instalacja <install>`)
 
-Requests is an :ref:`Apache2 Licensed <apache2>` HTTP library, written in Python, for human beings.
+Requests jest biblioteką HTTP na :ref:`licencji Apache2 <apache2>`, w języku
+Python, dla istot ludzkich.
 
-Python's standard **urllib2** module provides most of
-the HTTP capabilities you need, but the API is thoroughly **broken**.
-It was built for a different time — and a different web. It requires an *enormous* amount of work (even method overrides) to perform the simplest of tasks.
+Wbudowany w Pythona moduł **urllib2** oferuje
+większość potrzebnych możliwości HTTP, ale API jest całkowicie **zepsute**.
+Zostało zbudowane dla innych czasów — i dla innej sieci. Wymaga *olbrzymiej*
+ilości pracy (nawet nadpisywania metod) żeby wykonać najprostsze zadania.
 
-Things shouldn’t be this way. Not in Python.
+Tak nie powinno to wyglądać. Nie w Pythonie.
 
 ::
 
@@ -30,59 +32,58 @@ Things shouldn’t be this way. Not in Python.
     >>> r.json()
     {u'private_gists': 419, u'total_private_repos': 77, ...}
 
-See `similar code, without Requests <https://gist.github.com/973705>`_.
+Zobacz `podobny kod, bez Requests <https://gist.github.com/973705>`_.
 
-Requests takes all of the work out of Python HTTP/1.1 — making your integration with web services seamless. There's no need to manually add query strings to your URLs, or to form-encode your POST data. Keep-alive and HTTP connection pooling are 100%  automatic, powered by `urllib3 <https://github.com/shazow/urllib3>`_, which is embedded within Requests.
+Requests bierze na siebie całą trudną pracę z HTTP/1.1 w Pythonie — czyniąc twoją integrację z usługami sieciowymi bezszwową.  Nie ma potrzeby ręcznie dodawać ciągów zapytań do URL–i, albo poddawać twoje dane POST metodzie form-encode. Keep-alive i conection pooling są automatycznew 100% za sprawą `urllib3 <https://github.com/shazow/urllib3>`_, wbudowanego w Requests.
 
 
 Testimonials
 ------------
 
-Her Majesty's Government, Amazon, Google, Twilio, Mozilla, Heroku, PayPal, NPR, Obama for America, Transifex, Native Instruments, The Washington Post, Twitter, SoundCloud, Kippt, Readability, and Federal US Institutions use Requests internally. It has been downloaded over 2,000,000 times from PyPI.
+Rząd Jej Królewskiej Mości, Amazon, Google, Twilio, Mozilla, Heroku, PayPal, NPR, Obama for America, Transifex, Native Instruments, The Washington Post, Twitter, SoundCloud, Kippt, Readability, i Instytucje Federalne Stanów Zjednoczonych używają Requests wewnętrznie.  Requests zostało pobrane ponad 2 000 000 razy z PyPI.
 
 **Armin Ronacher**
-    Requests is the perfect example how beautiful an API can be with the
-    right level of abstraction.
+    Requests to perfekcyjny przykład, jak piękne może być API z prawidłowym
+    poziomem abstrakcji.
 
 **Matt DeBoard**
-    I'm going to get @kennethreitz's Python requests module tattooed
-    on my body, somehow. The whole thing.
+    Wytatuuję sobie jakoś moduł Pythona requests autorstwa @kennethreitz’a na
+    moim ciele.  W całości.
 
 **Daniel Greenfeld**
-    Nuked a 1200 LOC spaghetti code library with 10 lines of code thanks to
-    @kennethreitz's request library. Today has been AWESOME.
+    Zastąpiłem kod spaghetti o długości 1200 LOC z 10 liniami kodu dzięki
+    bibliotece Requests autorstwa @kennethreitz’a. Dziesiejszy dzień był
+    NIESAMOWITY.
 
 **Kenny Meyers**
-    Python HTTP: When in doubt, or when not in doubt, use Requests. Beautiful,
-    simple, Pythonic.
+    HTTP w Pythonie: W razie wątpliwości, albo w razie ich braku, użyj Requests.  Piękne, proste, Pythoniczne.
 
+Wspierane funkcje
+-----------------
 
-Feature Support
----------------
+Requests jest gotowy na dziesiejszą sieć.
 
-Requests is ready for today's web.
-
-- International Domains and URLs
-- Keep-Alive & Connection Pooling
-- Sessions with Cookie Persistence
-- Browser-style SSL Verification
+- Międzynarodowe domeny i URL-e
+- Keep-Alive i Connection Pooling
+- Sesje z zachowywaniem Cookies (ciasteczek)
+- Weryfikacja SSL w stylu przeglądarek
 - Basic/Digest Authentication
-- Elegant Key/Value Cookies
-- Automatic Decompression
-- Unicode Response Bodies
-- Multipart File Uploads
-- Connection Timeouts
+- Eleganckie Cookies (klucz/wartość)
+- Automatyczna dekompresja
+- Odpowiedzi Unicode
+- Przesyłanie plików multipart
+- Timeout połączeń
 - ``.netrc`` support
 - Python 2.6—3.3
-- Thread-safe.
+- Wątkowo-bezpieczny
 
 
-User Guide
-----------
+Instrukcja użytkownika
+----------------------
 
-This part of the documentation, which is mostly prose, begins with some
-background information about Requests, then focuses on step-by-step
-instructions for getting the most out of Requests.
+Ta część dokumentacji, w większości proza, zaczyna się od podstawowych
+informacji o Requests, a potem skupia się na instrukcjach krok po kroku
+uzyskiwania jak najwięcej z Requests.
 
 .. toctree::
    :maxdepth: 2
@@ -94,11 +95,11 @@ instructions for getting the most out of Requests.
    user/authentication
 
 
-Community Guide
------------------
+Informacje o społeczności
+--------------------------
 
-This part of the documentation, which is mostly prose, details the
-Requests ecosystem and community.
+Ta część dokumentacji, w większości proza, opisuje ekosystem i społeczność
+Requests.
 
 .. toctree::
    :maxdepth: 1
@@ -108,11 +109,11 @@ Requests ecosystem and community.
    community/support
    community/updates
 
-API Documentation
------------------
+Dokumentacja API
+----------------
 
-If you are looking for information on a specific function, class or method,
-this part of the documentation is for you.
+Jeśli poszukujesz informacji o specyficznej funkcji, klasie lub metodzie, ta
+część dokumentacji jest dla ciebie.
 
 .. toctree::
    :maxdepth: 2
@@ -120,11 +121,10 @@ this part of the documentation is for you.
    api
 
 
-Contributor Guide
------------------
+Instrukcja współpracownika
+--------------------------
 
-If you want to contribute to the project, this part of the documentation is for
-you.
+Jeśli chcesz wnieść wkład do projektu, ta część dokumentacji jest dla ciebie.
 
 .. toctree::
    :maxdepth: 1

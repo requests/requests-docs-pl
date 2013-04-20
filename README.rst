@@ -1,20 +1,19 @@
-Requests: HTTP for Humans
-=========================
+Requests: HTTP dla ludzi
+========================
 
 
 .. image:: https://travis-ci.org/kennethreitz/requests.png?branch=master
         :target: https://travis-ci.org/kennethreitz/requests
 
-Requests is an Apache2 Licensed HTTP library, written in Python, for human
-beings.
+Requests jest biblioteką HTTP na licencji Apache2, w języku Python, dla istot ludzkich.
 
-Most existing Python modules for sending HTTP requests are extremely
-verbose and cumbersome. Python's builtin urllib2 module provides most of
-the HTTP capabilities you should need, but the api is thoroughly broken.
-It requires an enormous amount of work (even method overrides) to
-perform the simplest of tasks.
+Większość istniejących modułów Pythona używanych do wysyłania żądań HTTP jest
+niezwykle rozwlekła i niewygodna. Wbudowany w Pythona moduł urllib2 oferuje
+większość potrzebnych możliwości HTTP, ale API jest całkowicie zepsute. Wymaga
+olbrzymiej ilości pracy (nawet nadpisywania metod) żeby wykonać najprostsze
+zadania.
 
-Things shouldn't be this way. Not in Python.
+Tak nie powinno to wyglądać. Nie w Pythonie.
 
 .. code-block:: pycon
 
@@ -26,57 +25,61 @@ Things shouldn't be this way. Not in Python.
     >>> r.text
     ...
 
-See `the same code, without Requests <https://gist.github.com/973705>`_.
+Zobacz `ten sam kod, bez Requests <https://gist.github.com/973705>`_.
 
-Requests allow you to send HTTP/1.1 requests. You can add headers, form data,
-multipart files, and parameters with simple Python dictionaries, and access the
-response data in the same way. It's powered by httplib and `urllib3
-<https://github.com/shazow/urllib3>`_, but it does all the hard work and crazy
-hacks for you.
+Requests pozwala na wysyłanie żądań HTTP/1.1. Możesz dodawać nagłówki, dane
+formularzy, pliki multipart i parametry z prostymi słownikami Pythona (typ
+``dict``), a dostęp do odpowiedzi jest równie prosty. Requests jest napędzane
+przez httplib i  `urllib3 <https://github.com/shazow/urllib3>`_, ale wykonuje
+całą ciężką pracę i robi zwariowane hacki za ciebie.
 
+Funkcje
+-------
 
-Features
---------
-
-- International Domains and URLs
-- Keep-Alive & Connection Pooling
-- Sessions with Cookie Persistence
-- Browser-style SSL Verification
+- Międzynarodowe domeny i URL-e
+- Keep-Alive i Connection Pooling
+- Sesje z zachowywaniem Cookies (ciasteczek)
+- Weryfikacja SSL w stylu przeglądarek
 - Basic/Digest Authentication
-- Elegant Key/Value Cookies
-- Automatic Decompression
-- Unicode Response Bodies
-- Multipart File Uploads
-- Connection Timeouts
-- Thread-safety
+- Eleganckie Cookies (klucz/wartość)
+- Automatyczna dekompresja
+- Odpowiedzi Unicode
+- Przesyłanie plików multipart
+- Timeout połączeń
+- Wątkowo-bezpieczny
 
 
-Installation
-------------
+Instalacja
+----------
 
-To install requests, simply:
+Aby zainstalować requests, wystarczy:
 
 .. code-block:: bash
 
     $ pip install requests
 
-Or, if you absolutely must:
+Albo, jeśli musisz:
 
 .. code-block:: bash
 
     $ easy_install requests
 
-But, you really shouldn't do that.
+Ale naprawdę nie powinieneś tego robić.
 
+Wnieś swój wkład!
+-----------------
 
+#. Sprawdź listę otwartych problemów albo otwórz nowy aby rozpocząć dyskusję
+   nad nową funkcją albo błędem. Istnieje tag Contributor Friendly dla
+   problemów które powinny być idealne dla ludzi, którzy nie są jeszcze zbyt
+   obeznani z kodem.
+#. Zforkuj repozytorium_ na GitHubie aby zacząć dokonywać zmian na gałęzi
+   **master** (albo na gałęzi stworzonej z niej).
+#. Napisz test, który pokazuje, że bug został naprawiony albo że funkcja działa
+   jak oczekiwano.
+#. Wyślij pull request i wkurzaj opiekuna, aż nie zostanie włączony do
+   oficjalnego repozytorium i opublikowany. :) Upewnij się, że dodałeś siebie
+   do pliku AUTHORS_.
 
-Contribute
-----------
-
-#. Check for open issues or open a fresh issue to start a discussion around a feature idea or a bug. There is a Contributor Friendly tag for issues that should be ideal for people who are not very familiar with the codebase yet.
-#. Fork `the repository`_ on Github to start making your changes to the **master** branch (or branch off of it).
-#. Write a test which shows that the bug was fixed or that the feature works as expected.
-#. Send a pull request and bug the maintainer until it gets merged and published. :) Make sure to add yourself to AUTHORS_.
-
-.. _`the repository`: http://github.com/kennethreitz/requests
+.. _repozytorium: http://github.com/kennethreitz/requests
 .. _AUTHORS: https://github.com/kennethreitz/requests/blob/master/AUTHORS.rst

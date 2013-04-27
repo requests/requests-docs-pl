@@ -1,20 +1,21 @@
 .. _api:
 
-Developer Interface
-===================
+.. TODO 152
+
+Interfejs dewelopera
+====================
 
 .. module:: requests
 
-This part of the documentation covers all the interfaces of Requests.  For
-parts where Requests depends on external libraries, we document the most
-important right here and provide links to the canonical documentation.
+Ta część dokumentacji obejmuje wszystkie interfejsy Requests.  Tam, gdzie
+Requests zależy od zewnętrznych bibliotek, dokumentujemy najważniejsze tutaj i
+oferujemy linki do oryginalnej dokumentacji.
 
+Główny interfejs
+----------------
 
-Main Interface
---------------
-
-All of Request's functionality can be accessed by these 7 methods.
-They all return an instance of the :class:`Response <Response>` object.
+Cała funkcjonalność Requests jest dostępna w poniższych 7 metodach.  Wszystkie
+zwracają instancję obiektu :class:`Response <Response>`.
 
 .. autofunction:: request
 
@@ -26,8 +27,8 @@ They all return an instance of the :class:`Response <Response>` object.
 .. autofunction:: delete
 
 
-Lower-Level Classes
-~~~~~~~~~~~~~~~~~~~
+Klasy niższego poziomu
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. autoclass:: requests.Request
    :inherited-members:
@@ -35,8 +36,8 @@ Lower-Level Classes
 .. autoclass:: Response
    :inherited-members:
 
-Request Sessions
-----------------
+Sesje żądań
+-----------
 
 .. autoclass:: Session
    :inherited-members:
@@ -45,8 +46,8 @@ Request Sessions
    :inherited-members:
 
 
-Exceptions
-~~~~~~~~~~
+Wyjątki
+~~~~~~~
 
 .. module:: requests
 
@@ -57,8 +58,8 @@ Exceptions
 .. autoexception:: TooManyRedirects
 
 
-Status Code Lookup
-~~~~~~~~~~~~~~~~~~
+Sprawdzanie kodów odpowiedzi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: requests.codes
 
@@ -73,15 +74,15 @@ Status Code Lookup
     >>> requests.codes['\o/']
     200
 
-Cookies
-~~~~~~~
+Ciasteczka (cookies)
+~~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: dict_from_cookiejar
 .. autofunction:: cookiejar_from_dict
 .. autofunction:: add_dict_to_cookiejar
 
 
-Encodings
+Kodowania
 ~~~~~~~~~
 
 .. autofunction:: get_encodings_from_content
@@ -90,8 +91,8 @@ Encodings
 .. autofunction:: decode_gzip
 
 
-Classes
-~~~~~~~
+Klasy
+~~~~~
 
 .. autoclass:: requests.Response
    :inherited-members:
@@ -111,70 +112,67 @@ Classes
    :inherited-members:
 
 
-Migrating to 1.x
-----------------
+Migracja do wersji 1.x
+----------------------
 
-This section details the main differences between 0.x and 1.x and is meant
-to ease the pain of upgrading.
+Ta sekcja opisuje najważniejsze różnice pomiędzy 0.x a 1.x i ma na celu
+ułatwienie aktualizacji.
 
 
-API Changes
-~~~~~~~~~~~
+Zmiany w API
+~~~~~~~~~~~~
 
-* ``Response.json`` is now a callable and not a property of a response.
+* ``Response.json`` jest teraz wywoływalne (callable), a nie właściwością (property) odpowiedzi.
 
   ::
 
       import requests
       r = requests.get('https://github.com/timeline.json')
-      r.json()   # This *call* raises an exception if JSON decoding fails
+      r.json()   # *wywołanie* podnosi wyjątek jeśli dekodowanie JSON nie uda się
 
-* The ``Session`` API has changed. Sessions objects no longer take parameters.
-  ``Session`` is also now capitalized, but it can still be
-  instantiated with a lowercase ``session`` for backwards compatibility.
+* API dla ``Session`` zmieniło się.  Obiekty sesji nie przyjmują już
+  parametrów.  ``Session`` jest teraz pisane wielką literą, ale wciąż można
+  używać ``session`` dla kompatybilności wstecznej.
 
   ::
 
-      s = requests.Session()    # formerly, session took parameters
+      s = requests.Session()    # wcześniej sesja przyjmowała parametry
       s.auth = auth
       s.headers.update(headers)
       r = s.get('http://httpbin.org/headers')
 
-* All request hooks have been removed except 'response'.
+* Wszystkie request hooki zostały usunięte, za wyjątkiem ``response``.
 
-* Authentication helpers have been broken out into separate modules. See
-  requests-oauthlib_ and requests-kerberos_.
+* Pomocnicy uwierzytelniania są teraz w oddzielnych modułach.  Patrz
+  requests-oauthlib_ i requests-kerberos_.
 
 .. _requests-oauthlib: https://github.com/requests/requests-oauthlib
 .. _requests-kerberos: https://github.com/requests/requests-kerberos
 
-* The parameter for streaming requests was changed from ``prefetch`` to
-  ``stream`` and the logic was inverted. In addition, ``stream`` is now
-  required for raw response reading.
+* Parametr dla żądań streamingowych został zmieniony z ``prefetch`` na
+  ``stream`` i logika została odwróćona. Dodatkowo, ``stream`` jest teraz
+  wymagany do odczytu surowej odpowiedzi.
 
   ::
 
-      # in 0.x, passing prefetch=False would accomplish the same thing
+      # w 0.x, prefetch=False miałoby taki sam efekt
       r = requests.get('https://github.com/timeline.json', stream=True)
       r.raw.read(10)
 
-* The ``config`` parameter to the requests method has been removed. Some of
-  these options are now configured on a ``Session`` such as keep-alive and
-  maximum number of redirects. The verbosity option should be handled by
-  configuring logging.
+* Parametr ``config`` metody requests został usunięty. Niektóre opcje są teraz konfigurowalne w ``Session``, np. keep-alive i maksymalna ilość przekierowań. Opcja gadatliwości powinna być skonfigurowana przez logging.
 
   ::
 
       import requests
       import logging
 
-      # these two lines enable debugging at httplib level (requests->urllib3->httplib)
-      # you will see the REQUEST, including HEADERS and DATA, and RESPONSE with HEADERS but without DATA.
-      # the only thing missing will be the response.body which is not logged.
+      # te dwie linie włączają debugowanie na poziomie httlib (requests->urllib3->httplib)
+      # zobaczysz REQUEST, wraz z HEADERS i DATA, oraz RESPONSE z HEADERS i bez DATA.
+      # jedyną brakującą rzeczą będzie response.body, które nie jest logowane.
       import httplib
       httplib.HTTPConnection.debuglevel = 1
       
-      logging.basicConfig() # you need to initialize logging, otherwise you will not see anything from requests
+      logging.basicConfig() # musisz zainicjować logging, w przeciwnym wypadku nie zobaczysz nic z requests
       logging.getLogger().setLevel(logging.DEBUG)
       requests_log = logging.getLogger("requests.packages.urllib3")
       requests_log.setLevel(logging.DEBUG)
@@ -184,13 +182,12 @@ API Changes
 
 
 
-Licensing
-~~~~~~~~~
+Licencja
+~~~~~~~~
 
-One key difference that has nothing to do with the API is a change in the
-license from the ISC_ license to the `Apache 2.0`_ license. The Apache 2.0
-license ensures that contributions to requests are also covered by the Apache
-2.0 license.
+Jedną z kluczowych zmian która nie dotyczy API jest zmiana licencji z licencji
+ISC_ na licencję `Apache 2.0`_. Licensja Apache 2.0 zapewnia licencjonowanie
+kontrybucji na tejże licencji.
 
 .. _ISC: http://opensource.org/licenses/ISC
 .. _Apache 2.0: http://opensource.org/licenses/Apache-2.0

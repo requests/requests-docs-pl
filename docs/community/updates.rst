@@ -1,30 +1,28 @@
 .. _updates:
 
-Updates
-=======
+Aktualizacje
+============
 
-If you'd like to stay up to date on the community and development of Requests,
-there are several options:
+Jeżeli chcesz mieć aktualne informacje o społeczności i pracach nad Requests,
+masz kilka opcji:
 
 GitHub
 ------
 
-The best way to track the development of Requests is through
-`the GitHub repo <https://github.com/kennethreitz/requests>`_.
+Najlepszym sposobem na śledzenie prac nad Requests jest `repozytorium na
+GitHub <https://github.com/kennethreitz/requests>`_.
 
 Twitter
 -------
 
-I often tweet about new features and releases of Requests.
+Bardzo często tweetuję o nowych funkcjach i wydaniach Requests.
 
-Follow `@kennethreitz <https://twitter.com/kennethreitz>`_ for updates.
+Obserwuj `@kennethreitz <https://twitter.com/kennethreitz>`_, aby uzyskać
+więcej informacji.
 
 
-Mailing List
-------------
+Lista mailingowa
+----------------
 
-There's a low-volume mailing list for Requests. To subscribe to the
-mailing list, send an email to
+Istnieje lista mailingowa dla Requests.  Aby się zapisać, wyślij maila na adres
 `requests@librelist.org <mailto:requests@librelist.org>`_.
-
-

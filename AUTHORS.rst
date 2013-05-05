@@ -1,8 +1,8 @@
-Requests is written and maintained by Kenneth Reitz and
-various contributors:
+Requests jest tworzony i zarządzany przez Kennetha Reitza i różnych
+współpracowników:
 
-Development Lead
-````````````````
+Dowódca rozwoju
+```````````````
 
 - Kenneth Reitz <me@kennethreitz.com>
 
@@ -13,8 +13,8 @@ Urllib3
 - Andrey Petrov <andrey.petrov@shazow.net>
 
 
-Patches and Suggestions
-```````````````````````
+Łatki i sugestie
+````````````````
 
 - Various Pocoo Members
 - Chris Adams

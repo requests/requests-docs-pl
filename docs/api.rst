@@ -51,11 +51,11 @@ Wyjątki
 
 .. module:: requests
 
-.. autoexception:: RequestException
-.. autoexception:: ConnectionError
-.. autoexception:: HTTPError
-.. autoexception:: URLRequired
-.. autoexception:: TooManyRedirects
+.. autoexception:: requests.exceptions.RequestException
+.. autoexception:: requests.exceptions.ConnectionError
+.. autoexception:: requests.exceptions.HTTPError
+.. autoexception:: requests.exceptions.URLRequired
+.. autoexception:: requests.exceptions.TooManyRedirects
 
 
 Sprawdzanie kodów odpowiedzi
@@ -77,18 +77,17 @@ Sprawdzanie kodów odpowiedzi
 Ciasteczka (cookies)
 ~~~~~~~~~~~~~~~~~~~~
 
-.. autofunction:: dict_from_cookiejar
-.. autofunction:: cookiejar_from_dict
-.. autofunction:: add_dict_to_cookiejar
+.. autofunction:: requests.utils.dict_from_cookiejar
+.. autofunction:: requests.utils.cookiejar_from_dict
+.. autofunction:: requests.utils.add_dict_to_cookiejar
 
 
 Kodowania
 ~~~~~~~~~
 
-.. autofunction:: get_encodings_from_content
-.. autofunction:: get_encoding_from_headers
-.. autofunction:: get_unicode_from_response
-.. autofunction:: decode_gzip
+.. autofunction:: requests.utils.get_encodings_from_content
+.. autofunction:: requests.utils.get_encoding_from_headers
+.. autofunction:: requests.utils.get_unicode_from_response
 
 
 Klasy

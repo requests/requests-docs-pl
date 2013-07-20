@@ -5,143 +5,144 @@ Quickstart
 
 .. module:: requests.models
 
-Eager to get started? This page gives a good introduction in how to get started
-with Requests. This assumes you already have Requests installed. If you do not,
-head over to the :ref:`Installation <install>` section.
+Chcesz zacząć? Ta strona to dobre wprowadzenie jak zacząć pracować z Requests.
+To wprowadzenie zakład, że już zainstalowałeś Requests.  Jeśli tego jeszcze nie
+zrobiłeś, sprawdź sekcję :ref:`Instalacja <install>`.
 
-First, make sure that:
+Po pierwsze, upewnij się, że:
 
-* Requests is :ref:`installed <install>`
-* Requests is :ref:`up-to-date <updates>`
+* Requests są :ref:`zainstalowane <install>`
+* Requests są :ref:`aktualne <updates>`
+
+Zacznijmy od kilku prostych przykładów.
 
 
-Let's get started with some simple examples.
+Wykonaj Żądanie
+---------------
 
+Wykonywanie żądania z Requests jest bardzo proste.
 
-Make a Request
---------------
-
-Making a request with Requests is very simple.
-
-Begin by importing the Requests module::
+Zacznij od zaimportowania modułu Requests::
 
     >>> import requests
 
-Now, let's try to get a webpage. For this example, let's get GitHub's public
-timeline ::
+Teraz spróbujemy pobrać stronę. W tym przykładzie, spróbujmy pobrać publiczną
+oś czasu na GitHubie::
 
     >>> r = requests.get('https://github.com/timeline.json')
 
-Now, we have a :class:`Response` object called ``r``. We can get all the
-information we need from this object.
+Teraz mamy obiekt klasy :class:`Response` zwany ``r``. Możemy uzyskać wszelkie
+potrzebne informacje z tego obiektu.
 
-Requests' simple API means that all forms of HTTP request are as obvious. For
-example, this is how you make an HTTP POST request::
+Proste API Requests oznacza, że wszystkie formy żądań HTTP są równie oczywiste.
+Na przykład, tak wykonuje się żądanie POST::
 
     >>> r = requests.post("http://httpbin.org/post")
 
-Nice, right? What about the other HTTP request types: PUT, DELETE, HEAD and
-OPTIONS? These are all just as simple::
+Nieźle, prawda? A jak wykonuje się inne żądania HTTP: PUT, DELETE, HEAD i
+OPTIONS? Równie prosto::
 
     >>> r = requests.put("http://httpbin.org/put")
     >>> r = requests.delete("http://httpbin.org/delete")
     >>> r = requests.head("http://httpbin.org/get")
     >>> r = requests.options("http://httpbin.org/get")
 
-That's all well and good, but it's also only the start of what Requests can
-do.
+To jest dobre, ale to dopiero początek tego, co może zrobić Requests.
 
 
-Passing Parameters In URLs
---------------------------
+Podawanie parametrów w URL-ach
+------------------------------
 
-You often want to send some sort of data in the URL's query string. If
-you were constructing the URL by hand, this data would be given as key/value
-pairs in the URL after a question mark, e.g. ``httpbin.org/get?key=val``.
-Requests allows you to provide these arguments as a dictionary, using the
-``params`` keyword argument. As an example, if you wanted to pass
-``key1=value1`` and ``key2=value2`` to ``httpbin.org/get``, you would use the
-following code::
+Bardzo często chcesz wysłać jakieś dane w ciągu zapytania URL-a. Jeśli
+konstruowałbyś URL ręcznie, byłyby to pary klucz/wartość w URL-u po znaku
+zapytania, np. ``httpbin.org/get?key=val``.
+Requests pozwala podawać te argumenty jako słownik (``dict``), używając keyword
+argumentu ``params``. Na przykład, jeśli chciałbyś przekazać
+``key1=value1`` i ``key2=value2`` do ``httpbin.org/get``, użyłbyś poniższego
+kodu::
 
     >>> payload = {'key1': 'value1', 'key2': 'value2'}
     >>> r = requests.get("http://httpbin.org/get", params=payload)
 
-You can see that the URL has been correctly encoded by printing the URL::
+Możesz zobaczyć, że URL został poprawnie zakodowany przez wydrukowanie URL-a::
 
     >>> print r.url
-    u'http://httpbin.org/get?key2=value2&key1=value1'
+    http://httpbin.org/get?key2=value2&key1=value1
+
+Zauważ, że klucz o wartości ``None`` nie zostanie dodany do URL-a.
 
 
-Response Content
-----------------
+Zawartość odpowiedzi
+--------------------
 
-We can read the content of the server's response. Consider the GitHub timeline
-again::
+Możemy przeczytać zawartość odpowiedzi serwera. Skorzystamy ponownie z osi
+czasu z GitHuba::
 
     >>> import requests
     >>> r = requests.get('https://github.com/timeline.json')
     >>> r.text
-    '[{"repository":{"open_issues":0,"url":"https://github.com/...
+    u'[{"repository":{"open_issues":0,"url":"https://github.com/...
 
-Requests will automatically decode content from the server. Most unicode
-charsets are seamlessly decoded.
+Requests automatycznie zdekoduje treść z serwera. Większość charsetów Unicode
+jest poprawnie i bezszwowo dekodowana.
 
-When you make a request, Requests makes educated guesses about the encoding of
-the response based on the HTTP headers. The text encoding guessed by Requests
-is used when you access ``r.text``. You can find out what encoding Requests is
-using, and change it, using the ``r.encoding`` property::
+Kiedy wykonujesz żądanie, Requests inteligentnie zgaduje kodowanie na podstawie
+nagłówków HTTP. To kodowanie jest używane przez ``r.text``. Możesz dowiedzieć
+się, jakiego kodowanie Requests używa, i je zmienić, używając własności
+``r.encoding``::
 
     >>> r.encoding
     'utf-8'
     >>> r.encoding = 'ISO-8859-1'
 
-If you change the encoding, Requests will use the new value of ``r.encoding``
+Jeśli zmienisz kodowanie, Requests użyje nowej wartości ``r.encoding`` przy
 whenever you call ``r.text``.
 
-Requests will also use custom encodings in the event that you need them. If
-you have created your own encoding and registered it with the ``codecs``
-module, you can simply use the codec name as the value of ``r.encoding`` and
-Requests will handle the decoding for you.
+Requests może też używać twoich własnych kodowań jeśli będziesz ich
+potrzebował. Jeśli stworzyłeś swoje własne kodowanie i zarejestrowałeś je w
+module ``codecs``, możesz po prostu użyć nazwy kodeka jako wartość
+``r.encoding`` i Requests zajmie się dekodowaniem za ciebie.
 
-Binary Response Content
------------------------
+Binarna zawartość odpowiedzi
+----------------------------
 
-You can also access the response body as bytes, for non-text requests::
+Możesz też uzyskać dostęp do body odpowiedzi jako bajty, dla żądań nietekstowych::
 
     >>> r.content
     b'[{"repository":{"open_issues":0,"url":"https://github.com/...
 
-The ``gzip`` and ``deflate`` transfer-encodings are automatically decoded for you.
+Transfer-encodings: ``gzip`` i ``deflate`` są automatycznie dekodowane.
 
-For example, to create an image from binary data returned by a request, you can
-use the following code:
+Na przykład, jeśli chcesz stworzyć obrazek z danych binarnych, możesz użyć
+poniższego kodu::
 
     >>> from PIL import Image
     >>> from StringIO import StringIO
     >>> i = Image.open(StringIO(r.content))
 
 
-JSON Response Content
----------------------
+Zwartość odpowiedzi JSON
+------------------------
 
-There's also a builtin JSON decoder, in case you're dealing with JSON data::
+Istnieje też wbudowany dekoder JSON, jeśli zajmujesz się danymi JSON::
 
     >>> import requests
     >>> r = requests.get('https://github.com/timeline.json')
     >>> r.json()
     [{u'repository': {u'open_issues': 0, u'url': 'https://github.com/...
 
-In case the JSON decoding fails, ``r.json`` raises an exception. For example, if
-the response gets a 401 (Unauthorized), attempting ``r.json`` raises ``ValueError:
-No JSON object could be decoded``
+Jeśli dekodowanie JSON nie powiedzie się, ``r.json`` podnosi wyjątek.  Na
+przykład, jeśli odpowiedź wyniesie 401 (Unauthorized), próba użycia ``r.json``
+podnosi ``ValueError: No JSON object could be decoded``
 
 
-Raw Response Content
---------------------
+Surowa zawratość odpowiedzi
+---------------------------
 
-In the rare case that you'd like to get the raw socket response from the
-server, you can access ``r.raw``. If you want to do this, make sure you set
-``stream=True`` in your initial request. Once you do, you can do this::
+Jeśli chcesz otrzymać surową odpowiedź socket od serwera (a zazwyczaj nie
+chcesz), możesz użyć ``r.raw``. Jeśli chcesz to zrobić, upewnij się, że
+ustawiłeś ``stream=True`` w twoim oryginalnym żądaniu. Jeśli to uczynisz,
+możesz zrobić tak::
 
     >>> r = requests.get('https://github.com/timeline.json', stream=True)
     >>> r.raw
@@ -150,13 +151,12 @@ server, you can access ``r.raw``. If you want to do this, make sure you set
     '\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03'
 
 
-Custom Headers
---------------
+Własne nagłówki
+---------------
 
-If you'd like to add HTTP headers to a request, simply pass in a ``dict`` to the
-``headers`` parameter.
+Jeśli chciałbyś dodać własne nagłówki HTTP do żądania, po prostu użyj parametru ``headers`` i umieść nagłówki w słowniku (``dict``).
 
-For example, we didn't specify our content-type in the previous example::
+Na przykład, nie podaliśmy content-type w poprzednim przykładzie::
 
     >>> import json
     >>> url = 'https://api.github.com/some/endpoint'
@@ -166,12 +166,13 @@ For example, we didn't specify our content-type in the previous example::
     >>> r = requests.post(url, data=json.dumps(payload), headers=headers)
 
 
-More complicated POST requests
-------------------------------
+Bardziej skompliowane żądania POST
+----------------------------------
 
-Typically, you want to send some form-encoded data — much like an HTML form.
-To do this, simply pass a dictionary to the `data` argument. Your
-dictionary of data will automatically be form-encoded when the request is made::
+Zazwyczaj, chcesz wysłać dane form-encoded — na przykład z formularza w HTML.
+Aby to zrobić, po prostu przekaż słownik do argumentu ``data``. Twój słownik
+danych będzie automatycznie zakodowany w formacie formularzy kiedy żądanie
+zostanie wykonane::
 
     >>> payload = {'key1': 'value1', 'key2': 'value2'}
     >>> r = requests.post("http://httpbin.org/post", data=payload)
@@ -185,9 +186,9 @@ dictionary of data will automatically be form-encoded when the request is made::
       ...
     }
 
-There are many times that you want to send data that is not form-encoded. If you pass in a ``string`` instead of a ``dict``, that data will be posted directly.
+Ale czasami chcesz wysłać dane które nie są form-encoded. Jeśli przekażesz ``string`` zamiast ``dict``, dane będą wysłane prosto to serwera.
 
-For example, the GitHub API v3 accepts JSON-Encoded POST/PATCH data::
+Na przykład, GitHub API v3 akceptuje dane POST/PATCH zakodowane w JSON::
 
     >>> import json
     >>> url = 'https://api.github.com/some/endpoint'
@@ -196,10 +197,10 @@ For example, the GitHub API v3 accepts JSON-Encoded POST/PATCH data::
     >>> r = requests.post(url, data=json.dumps(payload))
 
 
-POST a Multipart-Encoded File
------------------------------
+POST — plik zakodowany Multipart
+--------------------------------
 
-Requests makes it simple to upload Multipart-encoded files::
+Requests sprawia, że dodawanie plików zakodowanych Multipart jest proste::
 
     >>> url = 'http://httpbin.org/post'
     >>> files = {'file': open('report.xls', 'rb')}
@@ -214,7 +215,7 @@ Requests makes it simple to upload Multipart-encoded files::
       ...
     }
 
-You can set the filename explicitly::
+Możesz jawnie ustawić nazwę pliku::
 
     >>> url = 'http://httpbin.org/post'
     >>> files = {'file': ('report.xls', open('report.xls', 'rb'))}
@@ -229,7 +230,7 @@ You can set the filename explicitly::
       ...
     }
 
-If you want, you can send strings to be received as files::
+Jeśli chcesz, możesz wysłać ciągi znaków, które będą otrzymane jako pliki::
 
     >>> url = 'http://httpbin.org/post'
     >>> files = {'file': ('report.csv', 'some,data,to,send\nanother,row,to,send\n')}
@@ -245,23 +246,22 @@ If you want, you can send strings to be received as files::
     }
 
 
-Response Status Codes
----------------------
+Kody odpowiedzi
+---------------
 
-We can check the response status code::
+Możemy sprawdzić kod statusu odpowiedzi::
 
     >>> r = requests.get('http://httpbin.org/get')
     >>> r.status_code
     200
 
-Requests also comes with a built-in status code lookup object for easy
-reference::
+Requests ma też wbudowany obiekt sprawdzania kodów dla łatwej referencji::
 
     >>> r.status_code == requests.codes.ok
     True
 
-If we made a bad request (non-200 response), we can raise it with
-:class:`Response.raise_for_status()`::
+Jeśli wykonaliśmy złe żądanie (odpowiedź 4XX błąd klienta lub 5XX błąd
+serwera), możemy podnieść wyjątek używając :class:`Response.raise_for_status()`::
 
     >>> bad_r = requests.get('http://httpbin.org/status/404')
     >>> bad_r.status_code
@@ -273,19 +273,19 @@ If we made a bad request (non-200 response), we can raise it with
         raise http_error
     requests.exceptions.HTTPError: 404 Client Error
 
-But, since our ``status_code`` for ``r`` was ``200``, when we call
-``raise_for_status()`` we get::
+Ale, ponieważ ``status_code`` dla ``r`` wynosił ``200``, ``raise_for_status()``
+wykonuje::
 
     >>> r.raise_for_status()
     None
 
-All is well.
+Wszystko jest dobrze.
 
 
-Response Headers
-----------------
+Nagłówki odpowiedzi
+-------------------
 
-We can view the server's response headers using a Python dictionary::
+Możemy przejrzeć nagłówki odpowiedzi serwera przy użyciu słownika Pythona::
 
     >>> r.headers
     {
@@ -295,31 +295,27 @@ We can view the server's response headers using a Python dictionary::
         'server': 'nginx/1.0.4',
         'x-runtime': '148ms',
         'etag': '"e1ca502697e5c9317743dc078f67693f"',
-        'content-type': 'application/json; charset=utf-8'
+        'content-type': 'application/json'
     }
 
-The dictionary is special, though: it's made just for HTTP headers. According to
-`RFC 2616 <http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>`_, HTTP
-Headers are case-insensitive.
+Ten słownik jest specjalny: jest on stworzony tylko dla nagłówków HTTP. Zgodnie z
+`RFC 2616 <http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>`_, wielkość
+liter nie ma znaczenia w nagłówkach HTTP.
 
-So, we can access the headers using any capitalization we want::
+Więc możemy uzyskać dostęp do nagłówków używając dowolnej wielkości liter::
 
     >>> r.headers['Content-Type']
-    'application/json; charset=utf-8'
+    'application/json'
 
     >>> r.headers.get('content-type')
-    'application/json; charset=utf-8'
-
-If a header doesn't exist in the Response, its value defaults to ``None``::
-
-    >>> r.headers['X-Random']
-    None
+    'application/json'
 
 
-Cookies
--------
+Ciasteczka (cookies)
+--------------------
 
-If a response contains some Cookies, you can get quick access to them::
+Jeśli odpowiedź zawiera jakieś ciasteczka, możesz szybko uzyskać dostęp do
+nich::
 
     >>> url = 'http://example.com/some/cookie/setting/url'
     >>> r = requests.get(url)
@@ -327,8 +323,7 @@ If a response contains some Cookies, you can get quick access to them::
     >>> r.cookies['example_cookie_name']
     'example_cookie_value'
 
-To send your own cookies to the server, you can use the ``cookies``
-parameter::
+Aby wysłać własne ciasteczka do serwera, możemy użyć parametru ``cookies``::
 
     >>> url = 'http://httpbin.org/cookies'
     >>> cookies = dict(cookies_are='working')
@@ -338,14 +333,14 @@ parameter::
     '{"cookies": {"cookies_are": "working"}}'
 
 
-Redirection and History
------------------------
+Przekierowania i historia
+-------------------------
 
-Requests will automatically perform location redirection while using the GET
-and OPTIONS verbs.
+Requests automatycznie przekieruje żądania przy użyciu GET i OPTIONS.
 
-GitHub redirects all HTTP requests to HTTPS. We can use the ``history`` method
-of the Response object to track redirection. Let's see what Github does::
+GitHub przekierowuje wszystkie żądania HTTP na HTTPS. Możemy użyć metody
+``history`` obiektu Response do śledzenia przekierowań. Zobaczmy, co robi
+GitHub:
 
     >>> r = requests.get('http://github.com')
     >>> r.url
@@ -355,11 +350,12 @@ of the Response object to track redirection. Let's see what Github does::
     >>> r.history
     [<Response [301]>]
 
-The :class:`Response.history` list contains a list of the
-:class:`Request` objects that were created in order to complete the request. The list is sorted from the oldest to the most recent request.
+Lista :class:`Response.history` zawiera obiekty :class:`Request` stworzone w
+celu zakończenia żądania. Lista jest posortowana od najstarzego do najnowszego
+żądania.
 
-If you're using GET or OPTIONS, you can disable redirection handling with the
-``allow_redirects`` parameter::
+Jeśli używasz GET lub OPTIONS, możesz zablokować obsługę przekierowań przy
+użyciu parametru ``allow_redirects``::
 
     >>> r = requests.get('http://github.com', allow_redirects=False)
     >>> r.status_code
@@ -367,8 +363,8 @@ If you're using GET or OPTIONS, you can disable redirection handling with the
     >>> r.history
     []
 
-If you're using POST, PUT, PATCH, DELETE or HEAD, you can enable
-redirection as well::
+Jeśli używasz POST, PUT, PATCH, DELETE lub HEAD, możesz też włączyć
+automatyczne przekierowania::
 
     >>> r = requests.post('http://github.com', allow_redirects=True)
     >>> r.url
@@ -377,11 +373,11 @@ redirection as well::
     [<Response [301]>]
 
 
-Timeouts
---------
+Timeouty (przekroczenia limitu czasu żądania)
+---------------------------------------------
 
-You can tell requests to stop waiting for a response after a given number of
-seconds with the ``timeout`` parameter::
+Możesz przerwać czekanie na odpowiedź przez Requests po danej liczbie sekund
+przy użyciu parametru ``timeout``::
 
     >>> requests.get('http://github.com', timeout=0.001)
     Traceback (most recent call last):
@@ -391,27 +387,26 @@ seconds with the ``timeout`` parameter::
 
 .. admonition:: Note:
 
-    ``timeout`` only effects the connection process itself, not the
-    downloading of the response body.
+    ``timeout`` wpływa tylko na połączenie, nie na pobieranie odpowiedzi.
 
 
-Errors and Exceptions
----------------------
+Błędy i wyjątki
+---------------
 
-In the event of a network problem (e.g. DNS failure, refused connection, etc),
-Requests will raise a :class:`ConnectionError` exception.
+W razie problemu z siecią (np. nieudane żądanie do DNS, odmowa połączenia
+itd.), Requests podniesie wyjątek :class:`~requests.exceptions.ConnectionError`.
 
-In the event of the rare invalid HTTP response, Requests will raise
-an  :class:`HTTPError` exception.
+W razie rzadkiej nieprawidłowej odpowiedzi HTTP, Requests podniesie wyjątek
+:class:`~requests.exceptions.HTTPError`.
 
-If a request times out, a :class:`Timeout` exception is raised.
+Jeśli żądanie osiągnie timeout, wyjątek :class:`~requests.exceptions.Timeout` jest podnoszony.
 
-If a request exceeds the configured number of maximum redirections, a
-:class:`TooManyRedirects` exception is raised.
+Jeśli żądanie przekroczy skonfigurowany limit maksymalnych przekierowań, wyjątek
+:class:`~requests.exceptions.TooManyRedirects` jest podnoszony.
 
-All exceptions that Requests explicitly raises inherit from
+Wszystkie wyjątki podnoszone przez Requests dziedziczą z
 :class:`requests.exceptions.RequestException`.
 
 -----------------------
 
-Ready for more? Check out the :ref:`advanced <advanced>` section.
+Gotowy na więcej?  Sprawdź sekcję :ref:`zaawansowaną <advanced>`.

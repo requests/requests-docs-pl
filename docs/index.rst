@@ -40,7 +40,7 @@ Requests bierze na siebie całą trudną pracę z HTTP/1.1 w Pythonie — czyni�
 Testimonials
 ------------
 
-Rząd Jej Królewskiej Mości, Amazon, Google, Twilio, Mozilla, Heroku, PayPal, NPR, Obama for America, Transifex, Native Instruments, The Washington Post, Twitter, SoundCloud, Kippt, Readability, i Instytucje Federalne Stanów Zjednoczonych używają Requests wewnętrznie.  Requests zostało pobrane ponad 2 000 000 razy z PyPI.
+Rząd Jej Królewskiej Mości, Amazon, Google, Twilio, Mozilla, Heroku, PayPal, NPR, Obama for America, Transifex, Native Instruments, The Washington Post, Twitter, SoundCloud, Kippt, Readability, i Instytucje Federalne Stanów Zjednoczonych używają Requests wewnętrznie.  Requests zostało pobrane ponad 3 000 000 razy z PyPI.
 
 **Armin Ronacher**
     Requests to perfekcyjny przykład, jak piękne może być API z prawidłowym

@@ -1,42 +1,49 @@
 .. _authentication:
 
-Authentication
-==============
+Uwierzytelnienie
+================
 
-This document discusses using various kinds of authentication with Requests.
+Ten dokument opisuje różne formy uwierzytelniania z Requests.
 
-Many web services require authentication, and there are many different types.
-Below, we outline various forms of authentication available in Requests, from
-the simple to the complex.
+Wiele usług sieciowych wymaga uwierzytelnienia, istnieje też wiele różnych
+typów. Poniżej opisujemy różne formy uwierzytelniania dostępne w Requests, od
+tych prostszych do tych bardziej kompleksowych.
 
 
 Basic Authentication
 --------------------
 
-Many web services that require authentication accept HTTP Basic Auth. This is
-the simplest kind, and Requests supports it straight out of the box.
+Wiele usług sieciowych wymagających uwierzytelnienia akceptuje HTTP Basic Auth. Jest to najprostszy rodzaj uwierzytelnienia, i Requests wspiera go od razu *po wyjęciu z pudełka* (out of the box).
 
-Making requests with HTTP Basic Auth is very simple::
+Wykonywanie żądań z HTTP Basic Auth jest bardzo proste::
 
     >>> from requests.auth import HTTPBasicAuth
     >>> requests.get('https://api.github.com/user', auth=HTTPBasicAuth('user', 'pass'))
     <Response [200]>
 
-In fact, HTTP Basic Auth is so common that Requests provides a handy shorthand
-for using it::
+W rzeczywistości HTTP Basic Auth jest tak pospolity, że Requests oferuje skrót do używania go::
 
     >>> requests.get('https://api.github.com/user', auth=('user', 'pass'))
     <Response [200]>
 
-Providing the credentials in a tuple like this is exactly the same as the
-``HTTPBasicAuth`` example above.
+Podawanie danych logowania w krotce (``tuple``) w ten sposób jest identyczne z
+przykładem ``HTTPBasicAuth`` wyżej.
+
+
+Uwierzytelnienie netrc
+~~~~~~~~~~~~~~~~~~~~~~
+
+Jeśli metoda uwierzytelnienia nie jest podana z argumentem ``auth``, Requests spróbuje zdobyć dane do logowania dla nazwy hosta URL-a z pliku netrc użytkownika.
+
+Jeśli dane do logowania zostaną znalezione, żądanie jest wysyłane z HTTP Basic
+Auth.
 
 
 Digest Authentication
 ---------------------
 
-Another very popular form of HTTP Authentication is Digest Authentication,
-and Requests supports this out of the box as well::
+Inną popularną formą uwierzytelnienia HTTP jest Digest Authentication,
+a Requests wspiera ją również *po wyjęciu z pudełka*::
 
     >>> from requests.auth import HTTPDigestAuth
     >>> url = 'http://httpbin.org/digest-auth/auth/user/pass'
@@ -44,12 +51,14 @@ and Requests supports this out of the box as well::
     <Response [200]>
 
 
-OAuth 1 Authentication
-----------------------
+Uwierzytelnienie OAuth 1
+------------------------
 
-A common form of authentication for several web APIs is OAuth. The ``requests-oauthlib`` library allows Requests users to easily make OAuth authenticated requests::
+Popularną formą uwierzytelnienia w niektórych API sieciowych jest OAuth.
+Biblioteka ``requests-oauthlib`` pozwala użytkownikom Requests prosto wykonywać
+uwierzytelnione żądania OAuth::
 
-    >>> import request
+    >>> import requests
     >>> from requests_oauthlib import OAuth1
 
     >>> url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
@@ -59,45 +68,40 @@ A common form of authentication for several web APIs is OAuth. The ``requests-oa
     >>> requests.get(url, auth=auth)
     <Response [200]>
 
-For more information on how to OAuth flow works, please see the official `OAuth`_ website.
-For examples and documentation on requests-oauthlib, please see the `requests_oauthlib`_ repository on GitHub
+Aby uzyskać więcej informacji o tym, jak działa OAuth, zobacz oficjalną stronę `OAuth`_.
+Aby uzyskać przykłady i dokumentację do requests-oauthlib, zobacz repozytorium
+`requests_oauthlib`_ na GitHubie.
 
 
-Other Authentication
---------------------
+Inne uwierzytelnienie
+---------------------
 
-Requests is designed to allow other forms of authentication to be easily and
-quickly plugged in. Members of the open-source community frequently write
-authentication handlers for more complicated or less commonly-used forms of
-authentication. Some of the best have been brought together under the
-`Requests organization`_, including:
+Requests jest stworzony aby umożliwić łatwe i szybkie dodawanie innych form
+uwierzytelnienia. Członkowie społeczności open-source często tworzą dodatki do
+obsługi innych, bardziej skomplikowanych lub rzadziej
+używanych metod uwierzytelnienia. Najlepsze są częścią `organizacji Requests`_, w tym:
 
 - Kerberos_
 - NTLM_
 
-If you want to use any of these forms of authentication, go straight to their
-Github page and follow the instructions.
+Jeśli chcesz używać którejś z tych form uwierzytelnienia, idź do ich strony na
+GitHubie i podążaj za instrukcjami.
 
-
-New Forms of Authentication
+Nowe formy uwierzytelnienia
 ---------------------------
 
-If you can't find a good implementation of the form of authentication you
-want, you can implement it yourself. Requests makes it easy to add your own
-forms of authentication.
+Jeśli nie możesz znaleźć dobrej implementacji formy uwierzytelnienia którą
+chcesz użyć, możesz sam ją zaimplementować. Requests ułatwia dodawanie własnych
+form uwierzytelnienia.
 
-To do so, subclass :class:`requests.auth.AuthBase` and implement the
-``__call__()`` method. When an authentication handler is attached to a request,
-it is called during request setup. The ``__call__`` method must therefore do
-whatever is required to make the authentication work. Some forms of
-authentication will additionally add hooks to provide further functionality.
+Aby to zrobić, stwórz subklasę :class:`requests.auth.AuthBase` i zaimplementuj metodę
+``__call__()``. Kiedy handler uwierzytelnienia jest dołączony do żądania, jest on wywoływany (*call*) podczas przygotowywania żądania.  Metoda ``__call__`` musi więc zrobić wszystko co trzeba, aby uwierzytelnienie działało. Niektóre formy uwierzytelnienia dodają hooki do oferowania dodatkowej funkcjonalności.
 
-Examples can be found under the `Requests organization`_ and in the
-``auth.py`` file.
+Przykłady można znaleźć w `organizacji Requests`_ i w pliku ``auth.py``.
 
 .. _OAuth: http://oauth.net/
 .. _requests_oauthlib: https://github.com/requests/requests-oauthlib
 .. _Kerberos: https://github.com/requests/requests-kerberos
 .. _NTLM: https://github.com/requests/requests-ntlm
-.. _Requests organization: https://github.com/requests
+.. _organizacji Requests: https://github.com/requests
 
